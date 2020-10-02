@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Coming Soon 6</title>
+	<title>Simulasi Tabungan Berjangka</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
@@ -11,10 +11,6 @@
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -25,13 +21,14 @@
 	<div class="bg-img1 size1 overlay1 p-t-24" style="background-image: url('images/bg01.jpg');">
 		<div class="flex-w flex-sb-m p-l-80 p-r-74 p-b-15 respon5">
 			<div class="wrappic1 m-r-30 m-t-10 m-b-10">
-				<a href="#"><img src="images/icons/logo.png" alt="LOGO"></a>
+				<a href="#"><img src="images/icons/logo.png" alt="LOGO" style="height: 5%; width: 20%"></a>
 			</div>
 		</div>
 
-		<div class="flex-w flex-sa p-r-200 respon1">
+		<!-- <div class="container"> -->
+		<div class="flex-w flex-sa respon1 row justify-content-md-center">
 
-			<div class="bg0 wsize1 bor1 p-l-15 p-r-15 p-t-50 p-b-18 p-lr-15-sm">
+			<div class="bg0 col-lg-4 bor1 p-l-15 p-r-15 p-t-50 p-b-18 p-lr-15-sm m-b-20" style="height: min-content;">
 				<h3 class="s1-txt5 txt-center p-b-20">
 					Simulasikan tabungan rencana anda di sini
 				</h3>
@@ -44,7 +41,7 @@
 									Setoran Awal
 								</p>
 							</td>
-							<td>
+							<td colspan='2'>
 								<input class="form-control m-b-10" type="text" id="inp_setoran_awal" required>
 							</td>
 						</tr>
@@ -54,7 +51,7 @@
 									Setoran per Bulan
 								</p>
 							</td>
-							<td>
+							<td colspan='2'>
 								<input class="form-control m-b-10" type="text" id="inp_setor_perbulan" required>
 							</td>
 						</tr>
@@ -67,6 +64,11 @@
 							<td>
 								<input class="form-control m-b-10" type="text" id="inp_jangka_waktu" required>
 							</td>
+							<td>
+								<p class="s1-txt4 txt-right m-b-10 m-r-10 m-l-10">
+									Tahun
+								</p>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -77,6 +79,11 @@
 							<td>
 								<input class="form-control m-b-10" type="text" id="inp_bunga_pertahun" required>
 							</td>
+							<td>
+								<p class="s1-txt4 txt-left m-b-10 m-r-10 m-l-20">
+									%
+								</p>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -84,7 +91,7 @@
 									Biaya Admin per Bulan
 								</p>
 							</td>
-							<td>
+							<td colspan='2'>
 								<input class="form-control m-b-10" type="text" id="inp_biaya_admin_perbulan" required>
 							</td>
 						</tr>
@@ -100,7 +107,7 @@
 				</p> -->
 			</div>
 
-			<div class="bg0 bor1 wsize2 p-b-60 respon3" style="margin-top:20px;">
+			<div class="bg0 bor1 col-lg-7 p-l-0 p-r-0 m-l-20 p-b-60 respon3" id="section-to-print">
 				<div class="card-header bor1">
 					<h3 class="s1-txt1">Tabungan Rencana Anda</h3>
 				</div>
@@ -172,7 +179,7 @@
 								<th scope="col">Saldo Akhir</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="table_body">
 							<tr>
 								<th scope="row"></th>
 								<td></td>
@@ -186,6 +193,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- </div> -->
 	</div>
 
 	<!--===============================================================================================-->
@@ -194,20 +202,22 @@
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<!--===============================================================================================-->
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#btn-kalkulasi').click(function(e) {
+
+			$('#btn-kalkulasi').click(function (e) {
 				e.preventDefault();
 				var setoran_awal = document.getElementById('inp_setoran_awal').value;
 				var setoran_perbulan = document.getElementById('inp_setor_perbulan').value;
 				var jangka_waktu = document.getElementById('inp_jangka_waktu').value;
 				var bunga_pertahun = document.getElementById('inp_bunga_pertahun').value;
 				var biaya_admin = document.getElementById('inp_biaya_admin_perbulan').value;
-				var bunga_perbulan = (bunga_pertahun/100)/12;
+				var bunga_perbulan = (bunga_pertahun / 100) / 12;
 
-				var jml_bulan = jangka_waktu*12;
+				var jml_bulan = jangka_waktu * 12;
+
+				var total_setoran = ((jml_bulan - 1) * setoran_perbulan) + parseFloat(setoran_awal);
+				var akumulasi_bunga = 0;
 
 				var saldo_awal = [];
 				var setoran_bulanan = [];
@@ -218,28 +228,97 @@
 				for (i = 0; i <= jml_bulan; i++) {
 					if (i == 0) {
 						saldo_awal.push(0);
-						setoran_bulanan.push(Math.round( setoran_awal * 100 + Number.EPSILON ) / 100);
+						setoran_bulanan.push(parseFloat(setoran_awal));
 						bunga.push(0);
 						admin.push(0);
-						saldo_akhir.push(Math.round( setoran_awal * 100 + Number.EPSILON ) / 100);
+						saldo_akhir.push(parseFloat(setoran_awal));
 					} else {
+						var a = i - 1;
+						// saldo_awal.push(Math.round( saldo_akhir[a] * 100 + Number.EPSILON ) / 100);
+						saldo_awal.push(parseFloat(saldo_akhir[a].toFixed(2)));
 						var hitungbunga = saldo_awal[i] * bunga_perbulan;
+						// bunga.push(Math.round( hitungbunga * 100 + Number.EPSILON ) / 100);
+						// admin.push(Math.round( biaya_admin * 100 + Number.EPSILON ) / 100);
+						bunga.push(parseFloat(hitungbunga.toFixed(2)));
+						admin.push(parseFloat(biaya_admin));
+						// setoran_bulanan.push(Math.round( setoran_perbulan * 100 + Number.EPSILON ) / 100);
+						setoran_bulanan.push(parseFloat(setoran_perbulan));
 						var hitungsaldo = saldo_awal[i] + setoran_bulanan[i] + bunga[i] - admin[i];
-						var a = i-1;
-						saldo_awal.push(Math.round( saldo_akhir[a] * 100 + Number.EPSILON ) / 100);
-						console.log(saldo_akhir[a]);
-						setoran_bulanan.push(Math.round( setoran_perbulan * 100 + Number.EPSILON ) / 100);
-						bunga.push(Math.round( hitungbunga * 100 + Number.EPSILON ) / 100);
-						admin.push(Math.round( biaya_admin * 100 + Number.EPSILON ) / 100);
-						saldo_akhir.push(Math.round( hitungsaldo * 100 + Number.EPSILON ) / 100);
+
+
+						// saldo_akhir.push(Math.round( hitungsaldo * 100 + Number.EPSILON ) / 100);
+						saldo_akhir.push(parseFloat(hitungsaldo.toFixed(2)));
+						akumulasi_bunga = akumulasi_bunga + bunga[i];
+						// console.log(saldo_awal);
 					}
 				}
 
-				// console.log(saldo_awal);
-				// console.log(setoran_bulanan);
-				// console.log(bunga);
-				// console.log(admin);
-				// console.log(saldo_akhir);
+				const formatter = new Intl.NumberFormat('ID', {
+					style: 'currency',
+					currency: 'IDR',
+					minimumFractionDigits: 2
+				})
+
+				document.getElementById('txt_setoran_awal').innerHTML = formatter.format(setoran_awal);
+				document.getElementById('txt_setor_perbulan').innerHTML = formatter.format(setoran_perbulan);
+				document.getElementById('txt_jangka_waktu').innerHTML = jangka_waktu + ' Tahun </br>' + '(' + jml_bulan + ' bulan)';
+				document.getElementById('txt_bunga_pertahun').innerHTML = bunga_pertahun + ' %';
+				document.getElementById('txt_biaya_admin_perbulan').innerHTML = formatter.format(biaya_admin);
+
+				document.getElementById('total_setoran').innerHTML = formatter.format(total_setoran);
+				document.getElementById('aku_bunga').innerHTML = formatter.format(akumulasi_bunga);
+				document.getElementById('aku_biaya_admin').innerHTML = formatter.format(biaya_admin * jml_bulan);
+				document.getElementById('saldo_akhir_tab').innerHTML = formatter.format(saldo_akhir[jml_bulan]);
+
+				$('#table_body').empty();
+
+				var table_body = document.getElementById('table_body');
+				for (n = 0; n <= jml_bulan; n++) {
+					var tr = document.createElement('tr');
+					var td_bulan = document.createElement('td');
+					td_bulan.appendChild(document.createTextNode(n));
+					tr.appendChild(td_bulan);
+					var td_saldo_awal = document.createElement('td');
+					td_saldo_awal.appendChild(document.createTextNode(formatter.format(saldo_awal[n])));
+					tr.appendChild(td_saldo_awal);
+					var td_setor_bulanan = document.createElement('td');
+					td_setor_bulanan.appendChild(document.createTextNode(formatter.format(setoran_bulanan[n])));
+					tr.appendChild(td_setor_bulanan);
+					var td_bunga = document.createElement('td');
+					td_bunga.appendChild(document.createTextNode(formatter.format(bunga[n])));
+					tr.appendChild(td_bunga);
+					var td_admin = document.createElement('td');
+					td_admin.appendChild(document.createTextNode(formatter.format(admin[n])));
+					tr.appendChild(td_admin);
+					var td_saldo_akhir = document.createElement('td');
+					td_saldo_akhir.appendChild(document.createTextNode(formatter.format(saldo_akhir[n])));
+					tr.appendChild(td_saldo_akhir);
+					table_body.appendChild(tr);
+				}
+
+				var tr = document.createElement('tr');
+				tr.setAttribute('style', "background-color: #00b26f; color: white;");
+				var td_bulan = document.createElement('td');
+				td_bulan.setAttribute('colspan', '2');
+				tr.appendChild(td_bulan);
+				var td_total_setor_bulanan = document.createElement('td');
+				td_total_setor_bulanan.appendChild(document.createTextNode(formatter.format(total_setoran)));
+				tr.appendChild(td_total_setor_bulanan);
+				var td_total_bunga = document.createElement('td');
+				td_total_bunga.appendChild(document.createTextNode(formatter.format(akumulasi_bunga)));
+				tr.appendChild(td_total_bunga);
+				var td_total_admin = document.createElement('td');
+				td_total_admin.appendChild(document.createTextNode(formatter.format(biaya_admin * jml_bulan)));
+				tr.appendChild(td_total_admin);
+				var td_o = document.createElement('td');
+				tr.appendChild(td_o);
+				table_body.appendChild(tr);
+
+				console.log(saldo_awal);
+				console.log(setoran_bulanan);
+				console.log(bunga);
+				console.log(admin);
+				console.log(saldo_akhir);
 			});
 		});
 	</script>
